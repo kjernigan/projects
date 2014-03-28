@@ -1,0 +1,33 @@
+doctype html
+//[if IE 9]><html class="lt-ie10" lang="en" > <![endif]>
+html(class='no-js', lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Forum Project
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/foundation.css')
+    link(rel='stylesheet', href='/css/app.css')
+    script(src='/js/vendor/modernizr.js')
+  body
+    .row
+      .small-12.columns
+        h1 Forum
+    .row
+      .small-6.columns
+        button.tiny#newTopic Add New Topic
+    .row
+      .large-6.columns#inputDiv(style='display: none;')
+        input#inputField
+        textarea.textArea#textArea(cols=95, rows=15)
+        button.tiny#submitTopic Submit Topic
+        button.tiny#cancelNewTopic Cancel Submit
+    .row#content
+      .small-12.columns
+
+    script(src='/js/vendor/jquery.js')
+    script(src='/js/vendor/foundation.js')
+    script(src='/js/vendor/lodash.js')
+    script(src='/js/vendor/moment.js')
+    script(src='/js/source/main.js')
+

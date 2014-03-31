@@ -9,6 +9,7 @@ var initMongo = require('./lib/init-mongo');
 var initRoutes = require('./lib/init-routes');
 var topics = require('./routes/topics');
 var home = require('./routes/home');
+//var replies = require('./routes/replies');
 
 var express = require('express');
 var app = express();
@@ -27,6 +28,11 @@ app.post('/topics', d, topics.create);
 app.get('/topics', d, topics.index);
 app.get('/topics/query', d, topics.query);
 app.put('/topics', d, topics.update);
+/*
+ * app.post('/replies', d, replies.create);
+app.get('/replies', d, replies.index);
+app.get('/replies/query', d, replies.query);
+*/
 /* --- pipeline ends   */
 
 var server = require('http').createServer(app);

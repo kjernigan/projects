@@ -46,14 +46,27 @@
     var $showHide = $('<button>');
     var $replyDiv = $('<div>');
     var $replyText = $('<p>');
-
+    var $replyForm = $('<form>');
+    var $replyId = $('<input>');
+    var $replySubject = $('<input>');
+    var $replyContent = $('<input>');
+    
+    $replyId.attr('type', 'hidden').attr('name', '_id');
+    $replySubject.attr('type', 'hidden').attr('name', 'subject');
+    $replyContent.attr('type', 'hidden').attr('name', 'content');
+    $replyForm.attr('id', 'replyForm');
+    $replyId.val(topic._id);
+    $replySubject.val(topic.subject);
+    $replyContent.val(topic.content);
+    $replyForm.append($replyId).append($replySubject).append($replyContent);
 
     $showHide.text('Show Replies').addClass('tiny showHide show');
     $replyButton.text('Reply').addClass('tiny replyToTopic');
-    $replyButton.form = divId;
+//    $replyButton.form = divId;
     $header.text(divId + ' ' + topic.subject);
     $text.text(topic.content);
-    $post.prepend($text).prepend($header).prepend($showHide);
+    $post.prepend($text).prepend($header);
+      //.prepend($showHide);
 
     _.each(topic.replies, function(reply){
       $replyText.text(reply);
@@ -109,15 +122,17 @@
 
 // Displays reply input fields, submit reply, and cancel reply buttons.
   function replyToTopic(){
-//    var $replyDiv = $('<div>');
+//    var $replyForm = $('#replyForm');
     var $textArea = $('<textarea>');
     var $submitReply = $('<button>');
     var $topic = $(this).parent();
     var $h5 = $('<h5>');
     var $cancelReply = $('<button>');
 
-//    $replyDiv.addClass('replyDiv shown');
-    $textArea.addClass('textArea').attr('rows', '10').attr('cols', '75').attr('id', 'replyTextArea');
+
+//    $replyForm.addClass('replyForm');
+    $textArea.addClass('textArea').attr('rows', '10').attr('cols', '75').attr('id', 'replyTextArea').attr('name', 'replies');
+    $textArea.attr('form', '#replyForm');
     $submitReply.addClass('tiny submitReply');
     $submitReply.text('Submit Reply');
 //    $replyDiv.attr('id', divId);
@@ -125,6 +140,7 @@
     $cancelReply.addClass('tiny cancelReply');
     $cancelReply.text('Cancel Reply');
     divId++;
+//    $replyForm.append($textArea);
 //    $replyDiv.prepend($h5).append($textArea).append($submitReply).append($cancelReply);
     $topic.append($textArea).append($submitReply).append($cancelReply);
     $textArea.focus();
@@ -133,24 +149,29 @@
 
 // Pushes reply to database, hides reply input fields.
   function submitReply(){
-//    var $replyDiv = $(this).parent();
-    var $textArea = $(this).siblings('textarea');
-//    var $textAreaVal = $(this).siblings('textarea').val();
-//    var $p = $('<p>');
+    var $replyDiv = $('<div>');
+//    var data = $('#replyForm').serialize();
+    var $textAreaVal = $('#replyTextArea').val();
+    var $p = $('<p>');
+    var $textArea = $('#replyTextArea');
     var $submitButton = $(this);
-//    var $replyButton = $('<button>');
-//    var $topicDiv = $(this).parent().parent();
+    var $replyButton = $('<button>');
+    var $topicDiv = $(this).parent();
 
 
-    $textArea.serialize();
-//    $p.text($textAreaVal);
+
+    $p.text($textAreaVal);
     $textArea.remove();
     $submitButton.remove();
-//    $replyDiv.append($p);
-//    $replyButton.text('Reply');
-//    $replyButton.addClass('tiny replyToTopic');
-//    $topicDiv.append($replyButton);
 
+    $replyDiv.addClass('replyDiv');
+    $replyDiv.append($p);
+    $replyButton.text('Reply');
+    $replyButton.addClass('tiny replyToTopic');
+    $topicDiv.append($replyDiv);
+    $('.cancelReply').remove();
+    $(this).remove();
+    $topicDiv.append($replyButton);
   }
 
   function cancelReply(){
